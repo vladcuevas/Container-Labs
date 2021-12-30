@@ -52,3 +52,41 @@ docker container run -it alpine sh
 #Run additional command in existing container
 docker container exec -it
 docker container exec -it the-container-name bash
+
+# Docker Networks: Concepts
+## Each container connects to a VPN "bridge"
+## by default all containers can listen to other containers
+
+docker container run -p
+
+docker container port <container>
+
+docker container run -p 80:80 --name webhost -d nginx
+docker container port webhost
+docker container inspect
+
+## Get the container ip address 
+docker container inspect --format '{{ .NetworkSettings.IPAddress}}' webhost
+
+## Docker Networks: CLI Management
+docker network ls
+docker network inspect
+
+### Create network
+docker network create --driver
+docker network connect
+docker network disconnect
+
+docker container run -d --name new_nginx --network my_app_net nginx:alpine
+
+docker network create my_app_net
+docker network ls
+
+### The below connection is made between the network and the container
+docker network connect 74a667aa66c3 7b4763a0b772 
+# where 74a667aa66c3 is the network id and the latest is the container id, 
+# therefore the container will be connected to one or more networks 
+docker container inspect webhost
+
+# Disconnect is IDEM to connect, self explanatory
+docker network disconnect 74a667aa66c3 7b4763a0b772
