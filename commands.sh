@@ -79,6 +79,13 @@ docker network disconnect
 
 docker container run -d --name new_nginx --network my_app_net nginx:alpine
 
+### DNS
+docker container run -d --name my_nginx --network my_app_net nginx:alpine
+#### After creation of a container in the same network, both can talk as Docker uses the
+#### container name as the DNS name.
+docker container exec -it my_nginx ping new_nginx
+docker container exec -it new_nginx ping my_ngin
+
 docker network create my_app_net
 docker network ls
 
