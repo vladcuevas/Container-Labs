@@ -97,3 +97,11 @@ docker container inspect webhost
 
 # Disconnect is IDEM to connect, self explanatory
 docker network disconnect 74a667aa66c3 7b4763a0b772
+
+#Example to create a network and network alias
+
+docker system prune
+docker network create dude
+docker run -d --net dude -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" --network-alias search elasticsearch:7.16.3
+docker container lss
+docker container run --rm --net dude centos curl -s search:9200
